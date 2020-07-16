@@ -1,0 +1,6 @@
+@强制PID VID相同的设备在同一个usb口使用相同的com口
+@regedit--HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\usbflags
+Windows Registry Editor Version 5.00 
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\usbflags] 
+"IgnoreHWSerNum10C4EA60"=hex:01 
