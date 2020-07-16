@@ -11,6 +11,7 @@ UVLO: Undervoltage lockout, it is a threshold.
 vph: the system main supply volatage.
 
 @fsg包制作：
+@删除mbn_ota.txt,重新编译代码生产不含运营商的版本--重要
 fsg时在删除policyman目录时保留device_config.xml.
 Please just keep device_config and remove the other files in policyman/
 1. add dummy key
