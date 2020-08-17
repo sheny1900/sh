@@ -1,0 +1,41 @@
+定时器：
+ctp_timer = xTimerCreate(NULL, \    /* 定时器名字 */
+              20/portTICK_PERIOD_MS , \/* 定时器周期,单位时钟节拍 */
+              pdFALSE, \/* 单次模式或者周期模式*/
+				      NULL, \       /* 定时器ID*/
+              touch_panel_timer_callback);  /* 定时器回调函数 */
+	
+hal_gpt_sw_get_timer(&ble_gpt_handle);
+hal_gpt_sw_start_timer_ms(\
+                         ble_gpt_handle, \
+                         3500 / portTICK_PERIOD_MS, \
+                         (hal_gpt_callback_t)ble_management_gpt_callback, \
+                         NULL);
+
+队列：
+ctp_queue_handle = xQueueCreate(BSP_CTP_QUEUE_LENGTH, sizeof(ctp_msg_t));  handle 句柄
+xQueueReceive(ctp_queue_handle, &msgs, portMAX_DELAY) == pdPASS------处理TP按键
+	ret = xQueueSendFromISR(mtb_queue_handle, &msgs, &xHigherPriorityTaskWoken);
+	if (ret != pdTRUE) {
+        MTB_DBG("Send Queue fail!! Queue size = %d ", MTB_QUEUE_LENGTH);
+    }
+    
+	if( xHigherPriorityTaskWoken ) {
+		portYIELD_FROM_ISR (xHigherPriorityTaskWoken);
+	}放在中断函数里面
+xQueueHandle MsgQueue;
+声明一个队列句柄，队列句柄可以理解成一个队列的标记，不同的队列具有不同的标记
+MsgQueue = xQueueCreate( 5 , sizeof( int16_t ) );
+创建队列，即在内容中开辟固定大小的区域。FreeRTOS中需指定队列的深度和每个元素的字节长度，如果队列的深度为1那么便和uCOS的消息邮箱用法相似。
+xQueueSend( MsgQueue, ( void* )&SendNum, 0 );
+向队列中填充内容，第二参数需要取出地址并进行类型转换，第三个参数设置等待时间，在队列满的情况下再往队列中填充内容的话便会阻塞任务，直到等待时间溢出；若此处填充的内容为0的话，则立即返回插入队列结果（成功或失败）
+xQueueReceive( MsgQueue, &ReceiveNum, 100/portTICK_RATE_MS )
+从队列中取出内容，第二个参数需要取出地址，第三个参数为等待最大时间，若在等待的时间内队列中没有数据则返回阻塞任务
+
+task：  
+  xTaskCreate(ctp_task_main,         pvTaskCode 	指向任务的入口函数. 任务必须执行并且永不返回 (即：无限循环).
+			BSP_CTP_TASK_NAME,       pcName 	描述任务的名字。主要便于调试。最大长度由configMAX_TASK_NAME_LEN.定义
+			BSP_CTP_TASK_STACKSIZE / sizeof(StackType_t), usStackDepth 	指定任务堆栈的大小 ，堆栈能保护变量的数目- 不是字节数. 例如，如果堆栈为16位宽度，usStackDepth定义为 100, 200 字节，这些将分配给堆栈。堆栈嵌套深度（堆栈宽度）不能超多最大值——包含了size_t类型的变量
+			NULL,            pvParameters 	指针用于作为一个参数传向创建的任务
+			BSP_CTP_TASK_PRIO,  uxPriority 	任务运行时的优先级( 0 : 优先级最低)
+			&ctp_task_handle); pvCreatedTask 	用于传递一个处理——引用创建的任务
