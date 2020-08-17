@@ -9,6 +9,7 @@ The hardware default UVLO rising threshold is 2.725 V, and the hysteresis is 175
 UVLO rising threshold and hysteresis are reconfigured in SBL to 2.825 V rising and 425 mV, respectively. 
 UVLO: Undervoltage lockout, it is a threshold. 
 vph: the system main supply volatage.
+batt-id 电阻值需要看下spec,SDM450不支持140K-170K
 
 @fsg包制作：
 @删除mbn_ota.txt,重新编译代码生产不含运营商的版本--重要
@@ -23,3 +24,35 @@ Please just keep device_config and remove the other files in policyman/
 6. Python sectools.py secimage -p sdm450 ./out/fs_image.tar.gz.mbn -f efs_tar -o . -sa
 7. python efs_image_create.py efs_image_meta.bin fs_image.tar.gz.mbn
 8. 擦除modem_st1, modem_st2, fsg,fsc 分区然后下载
+nv850 ps模式下校准无问题，注网后会断开。
+nv947 0x01在cs模式下无法正常代价
+perl 版本需要参与编译xml文件，没有xml::parser命令无法解析，导致efs修改的mbn无法生效
+8953 MPSS needs Perl 5.14.2 or later version
+
+@系统重启相关：
+/sys/bus/msm_subsys/devices/subsys4/restart_level
+SYSTEM modem crash  系统重启     
+RELATED modem crash  modem重启
+setprop persist.sys.ssr.restart_level ALL_ENABLE   N测子模块单方面重启
+CONFIG_MSM_DLOAD_MODE=n 等同于write /sys/module/msm_poweroff/parameters/download_mode 0 相当于不进入dump，改为重启
+static int download_mode = 1; in drivers/power/reset/msm-poweroff.c,可以在user版本的情况下刷入修改的userdebug kernel修改重启机制，来抓取dumplog
+
+@kye&input相关：
+1）frameworks/base/data/keyboards/Generic.kl 
+键盘布局文件添加键值映射，这里的键值对应kernel里面的键值，按键名字对应上层InputEventLabels.h里面定义的按键名字
+key 497 GESTURE_WAKELOCK
+2）frameworks/base/core/res/res/values/attrs.xml
+<enum name="KEYCODE_GESTURE_WAKELOCK" value="267"
+3）frameworks\native\include\android\keycodes.h
+AKEYCODE_GESTURE_WAKEUP       =267
+4）frameworks\native\include\input\InputEventLabels.h  定义键值
+DEFINE_KEYCODE(GESTURE_WAKELOCK) 
+5）frameworks/base/core/java/android/view/KeyEvent.java
+public static final int KEYCODE_GESTURE_WAKELOCK = 267; 
+
+@usb协议和charge相关：
+PD（portable device）便携式设备连接到host或hub后，USB2.0协议规定了三种情况下PD汲取电流的最大值：
+（1）bus在suspend(挂起)时，最大汲取电流2.5mA；
+（2）bus没suspend(挂起)并且未被配置时，最大汲取电流100mA；
+（3）bus没suspend(挂起)并被配置时，最大汲取电流500mA.
+
