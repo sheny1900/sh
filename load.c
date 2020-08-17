@@ -15,8 +15,13 @@ echo 0x844 > address && echo 1 > count && echo 0x00 > data && echo 0x845 > addre
     6 adb reboot edl
   recovery:
     adb reboot recovery
-    presistent apk 在一段时间内的频繁crash导致系统保护进入recovery模式
+    presistent apk 在一段时间内的频繁crash导致系统保护进入recovery模式---services/core/java/com/android/server/RescueParty.java
     misc分区烧录boot-recovery的misc.img，recovery界面try again的misc.img
+    boot-recovery                                                   recovery
+    --prompt_and_wipe_data
+    --reason=RescueParty
+    --locale=zh_CN
+                                                       
    
 @电池欠压保护
 @Hysteresis 这个参数就是一个芯片恢复正常状态，也就是退出UVLO状态的电压差值，比如uvlo是2.7V ，Hysteresis 为100mv，那么电压升高到UVLO + Hysteresis 也就是2.8V，芯片就退出UVLO状态
