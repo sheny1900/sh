@@ -6,6 +6,7 @@ echo 0x844 > address && echo 1 > count && echo 0x00 > data && echo 0x845 > addre
   edl（9008）
     FORCED_USB_BOOT is connected to 1.8V ------硬件强制下载模式
     "BOOT config" configure to boot from USB -----DP接地
+    NOHLOS\BOOT.BF.3.3\boot_images\core\wiredconnectivity\qusb\src\dci\qusb_dci_8953.c qusb_forced_download_feature_supported = TRUE; TRUE修改为
     3.PBL cannot run SBL normally 
       3.1 no emmc 
       3.2 cannot communicate with emmc 
