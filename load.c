@@ -2,6 +2,10 @@
 cd /sys/kernel/debug/spmi/spmi-0 
 echo 0x844 > address && echo 1 > count && echo 0x00 > data && echo 0x845 > address && echo 0x00 > data && echo 0x846 > address && echo 0x01 > data && echo 0x847 > address && echo 0x80 > data 
 
+@mount
+adb wait-for-device shell mount -o rw,remount /firmware
+adb wait-for-device shell mount -o rw,remount /vendor
+
 @进入模式：
   edl（9008）
     FORCED_USB_BOOT is connected to 1.8V ------硬件强制下载模式
