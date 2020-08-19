@@ -53,6 +53,7 @@ perl 版本需要参与编译xml文件，没有xml::parser命令无法解析，�
 
 @系统重启相关：
 /sys/bus/msm_subsys/devices/subsys4/restart_level
+/sys/bus/msm_subsys/devices/subsys*/restart_level
 SYSTEM modem crash  系统重启     
 RELATED modem crash  modem重启
 setprop persist.sys.ssr.restart_level ALL_ENABLE   N测子模块单方面重启
