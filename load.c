@@ -2,6 +2,14 @@
 cd /sys/kernel/debug/spmi/spmi-0 
 echo 0x844 > address && echo 1 > count && echo 0x00 > data && echo 0x845 > address && echo 0x00 > data && echo 0x846 > address && echo 0x01 > data && echo 0x847 > address && echo 0x80 > data 
 
+@crash相关：
+解析PC指针：
+  ./prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-addr2line -Cfe vmlinux 0xffffffc00014e68c 
+  list* addr
+地位PC位置：
+  这个PC地址不是kernel地址（64bit kernel地址范围：0xFFFF_FF80_0000_0000 ~ 0xFFFF_FFFF_FFFF_FFFF），也不是lk地址（0x41000000~），那是什么地址呢？
+  检查发现是Trustonic OS的范围：Secure OS: 0x07C0_0000 ~ 0x0800_0000。也就是说CPU0卡在TEE OS里导致HWT的。
+
 @mount
 adb wait-for-device shell mount -o rw,remount /firmware
 adb wait-for-device shell mount -o rw,remount /vendor
