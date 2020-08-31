@@ -98,4 +98,4 @@ cd /data
 ls -aliR 遍历所有data目录下的子目录和文件
 stat -f /data 查看data目录下inode的使用情况
 adb shell dumpsys storage
-3其他应用修改了sdcard的system用户组权限，导致APK访问异常
+3其他应用修改了sdcard目录的system用户组权限，导致APK访问异常
