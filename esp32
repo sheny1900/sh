@@ -1,0 +1,30 @@
+修改分区表：
+https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-guides/partition-tables.html#id7
+  添加分区：
+  Add xx.csv under:
+  D:\Program Files\Arduino\hardware\espressif\esp32\tools\partitions\xx.csv
+  Place boards.txt under:
+  D:\Program Files\Arduino\hardware\espressif\esp32\boards.txt
+    esp32.menu.PartitionScheme.xx= xx 4MB 64k NVS
+    esp32.menu.PartitionScheme.xx.build.partitions=xx----------在Arduino工具目录PartitionScheme生效
+   下载新的分区文件：
+   如果是使用arduino项目菜单的上传，直接下载既可。
+   如果是用flash_download_tool_v3.8.5.exe下载需要把xx.csv生成为xx.bin:
+      手动将 CSV 文件转换为二进制文件:
+      python gen_esp32part.py input_partitions.csv binary_partitions.bin
+      手动将二进制文件转换为 CSV 文件:
+      python gen_esp32part.py binary_partitions.bin input_partitions.csv
+   Arduino的文件菜单-首选项--显示详细输出：编译、上传
+      D:\Program Files\Arduino\hardware\espressif\esp32/tools/esptool/esptool.exe --chip esp32 --port COM63 --baud 921600 
+      --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 40m --flash_size detect 
+      0xe000 D:\Program Files\Arduino\hardware\espressif\esp32/tools/partitions/boot_app0.bin 
+      0x1000 D:\Program Files\Arduino\hardware\espressif\esp32/tools/sdk/bin/bootloader_qio_40m.bin 
+      0x10000 C:\Users\shenyong\AppData\Local\Temp\arduino_build_717961/ETProduction_1.00.ino.bin
+      0x8000 C:\Users\shenyong\AppData\Local\Temp\arduino_build_717961/ETProduction_1.00.ino.partitions.bin
+      通过上面的log信息可以配置flash_download_tool_v3.8.5.exe下载项，ETProduction_1.00.ino.partitions.bin 和通过上面工具生成的bin文件一样。
+      
+ 回读分区：
+    https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-guides/partition-tables.html#id7
+    esptool.py -p /dev/ttyUSB1 -b 460800 read_flash 0x10000 0x100000 dump.bin 可以回读nv区的信息
+      
+      
