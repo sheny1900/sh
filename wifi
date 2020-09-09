@@ -1,0 +1,29 @@
+qcom：
+here are 4 methods to configure MAC address for WCN36x0:
+NV#4678
+WCNSS_qcom_wlan_nv.bin
+WCNSS_qcom_cfg.ini
+Random MAC address (if all above 3 methods are not used)
+
+When system startup, wcnss_service will read MAC from NV#4678 then set to wcnss driver.
+
+Wlan driver will use MAC address from wncss driver if it's valid.
+
+If NV#4678 is not set (all zero), driver overwrites the MAC if MAC address in
+WCNSS_qcom_wlan_nv.bin is valid.
+
+If both NV#4678 and WCNSS_qcom_wlan_nv.bin are invalid, driver will check if the MAC address
+from WCNSS_qcom_cfg.ini is default value (000AF58989FF) or not. If it's not default value, this
+MAC address will be used. If it's default value, driver will create a random MAC address and use it.
+
+Priority: NV#4678 > WCNSS_qcom_wlan_nv.bin > INI > random MAC (if all above 3 ways are invalid)
+
+random mac address of wlan0 is from OUI&SOC serial number
+000AF58989FF----000af5 
+soc serial number
+wcnss_get_serial_number---kernel/driver/net/wireless/wcnss/wcnss_wlan.c
+dmesg log:wcnss_get_serial_number[0m: Device serial number: 3819394728
+then vendor\qcom\opensource\wlan\prima\CORE\HDD\src\wlan_hdd_main.c
+serialno *= VOS_MAX_CONCURRENCY_PERSONA; VOS_MAX_CONCURRENCY_PERSONA is 4
+so 3819394728 *4 = 38E9D5AA0(hex)
+mac address 000af59d5aa0
