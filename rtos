@@ -1,3 +1,5 @@
+四种实时操作系统(RTOS)是：Lynx实时系统公司的LynxOS、QNX软件系统有限公司的QNX以及两种具有代表性的实时Linux--新墨西哥工学院的RT－Linux和堪萨斯大学的KURT－Linux
+
 实时操作系统的特征
 　多任务
 　有线程优先级
