@@ -1,4 +1,4 @@
-1 SDM450+pmi8952+pm8953 在支持power path模式下(usb同时给电池和系统供电)，充满电之后电池电压会掉落。
+1 SDM450+pmi8952+pm8953 在支持power path模式下(usb同时给电池和系统供电)，充满电之后电池电压会掉落。---80-P2563-4
 原因分析：When the BATFET is open (after charging has been terminated or disabled) and VBATT is high, itis observed that a few mAs of battery current (varies from part to part)
 is discharged into the PMIC. The current can go up to a maximum of 6 mA on a few random samples tested.
 There is no major system impact.
