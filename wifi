@@ -27,3 +27,7 @@ then vendor\qcom\opensource\wlan\prima\CORE\HDD\src\wlan_hdd_main.c
 serialno *= VOS_MAX_CONCURRENCY_PERSONA; VOS_MAX_CONCURRENCY_PERSONA is 4
 so 3819394728 *4 = 38E9D5AA0(hex)
 mac address 000af59d5aa0
+
+MTU
+确认链路是否合适：ping -c 2 -M do -s xxxx www.baidu.com  xxxx为设置的mtu长度
+cat sys/class/net/wlan0/mtu 获取平台端mtu设定值
