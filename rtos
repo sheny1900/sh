@@ -2,6 +2,7 @@
 https://blog.csdn.net/lxl584685501/article/details/46605019?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduend~default-4-46605019.nonecase&utm_term=rtos%20%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F
 https://baike.baidu.com/item/MMU/4542218?fr=aladdin
 https://baike.baidu.com/item/%E5%86%85%E5%AD%98%E7%A2%8E%E7%89%87/3883950?fr=aladdin
+https://blog.csdn.net/weixin_34019929/article/details/85920153?utm_medium=distribute.pc_relevant.none-task-blog-title-1&spm=1001.2101.3001.4242
 
 四种实时操作系统(RTOS)是：Lynx实时系统公司的LynxOS、QNX软件系统有限公司的QNX以及两种具有代表性的实时Linux--新墨西哥工学院的RT－Linux和堪萨斯大学的KURT－Linux
 实时操作系统的特征
@@ -56,3 +57,6 @@ https://baike.baidu.com/item/%E5%86%85%E5%AD%98%E7%A2%8E%E7%89%87/3883950?fr=ala
  -----------  
     hal_gpt_sw_start_timer_ms 和 xTimerCreate 一个GPT的偏硬件，精度比较好，一个是软件模拟的，精度不高，但是GPT是有使用次数限制。
 -----------
+xTaskCreate() 创建线程以及优先级，vTaskPrioritySet()修改线程优先级
+vTaskDelay() 线程延迟堵塞N个心跳周期，离开堵塞态
+vTaskDelayUntil() 线程延迟N个心跳周期后由堵塞态进入就绪态
