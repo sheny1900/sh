@@ -73,3 +73,4 @@ FPU（浮点运算单元）的情况下，还需额外34个浮点寄存器，（
  vTaskGetRunTimeStats((char *)&pcWriteBuffer);
  printf("%s\r\n", pcWriteBuffer);
  根据上面的api接口可以来优先task需要的栈以及cpu的负载情况
+ ---额外一个uxTaskGetStackHighWaterMark查看task栈使用情况，2523不支持
