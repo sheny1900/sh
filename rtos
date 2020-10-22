@@ -61,6 +61,10 @@ xTaskCreate() 创建线程以及优先级，vTaskPrioritySet()修改线程优先
 vTaskDelay() 线程延迟堵塞N个心跳周期，离开堵塞态
 vTaskDelayUntil() 线程延迟N个心跳周期后由堵塞态进入就绪态
 
+Cortex-M3 和 M4 内核具有双堆栈指针，MSP 主堆栈指针和 PSP 进程堆栈指针，一旦进入了中断函数以及可能发生的中断嵌套都是用的 MSP 指针，
+非FPU（浮点运算单元）的情况下，最大需要保存16个通用寄存器参数到栈中，一般寄存器是4个字节，16*4=64个字节
+FPU（浮点运算单元）的情况下，还需额外34个浮点寄存器，（16+34）*4 =200个字节
+
 获取task的运行状态：
  vTaskList---显示当前系统所有task的任务名，任务状态，优先级，剩余栈，任务序号
  vTaskList((char *)&pcWriteBuffer);
