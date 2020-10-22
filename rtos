@@ -60,3 +60,12 @@ https://blog.csdn.net/weixin_34019929/article/details/85920153?utm_medium=distri
 xTaskCreate() 创建线程以及优先级，vTaskPrioritySet()修改线程优先级
 vTaskDelay() 线程延迟堵塞N个心跳周期，离开堵塞态
 vTaskDelayUntil() 线程延迟N个心跳周期后由堵塞态进入就绪态
+
+获取task的运行状态：
+ vTaskList---显示当前系统所有task的任务名，任务状态，优先级，剩余栈，任务序号
+ vTaskList((char *)&pcWriteBuffer);
+ printf("%s\r\n", pcWriteBuffer);
+ vTaskGetRunTimeStats---显示任务名，运行次数，cpu使用率
+ vTaskGetRunTimeStats((char *)&pcWriteBuffer);
+ printf("%s\r\n", pcWriteBuffer);
+ 根据上面的api接口可以来优先task需要的栈以及cpu的负载情况
