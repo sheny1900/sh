@@ -74,3 +74,12 @@ FPU（浮点运算单元）的情况下，还需额外34个浮点寄存器，（
  printf("%s\r\n", pcWriteBuffer);
  根据上面的api接口可以来优先task需要的栈以及cpu的负载情况
  ---额外一个uxTaskGetStackHighWaterMark查看单个task栈使用情况，2523不支持
+
+NVIC 的全称是 Nested vectored interrupt controller，即嵌套向量中断控制器，每个中断的优先级都是用寄存器中的 8 位来设置 2^8= 256个中断
+具有高抢占式优先级的中断可以在具有低抢占式优先级的中断服务程序执行过程中被响应，即中断嵌套，或者说高抢占式优先级的中断可以抢占低抢占式优先级的中断的执行
+在抢占式优先级相同的情况下，如果有低子优先级中断正在执行，高子优先级的中断要等待已被响应的低子优先级中断执行结束后才能得到响应，即子优先级不支持中断嵌套
+
+FreeRTOS 进入和退出临界段的函数如下：
+#define taskENTER_CRITICAL() portENTER_CRITICAL()
+#define taskEXIT_CRITICAL() portEXIT_CRITICAL()
+上面这两个函数是供用户调用的，其中函数 taskENTER_CRITICAL 是进入临界段，函数taskEXIT_CRITICAL 是退出临界段
