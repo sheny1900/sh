@@ -83,3 +83,14 @@ FreeRTOS 进入和退出临界段的函数如下：
 #define taskENTER_CRITICAL() portENTER_CRITICAL()
 #define taskEXIT_CRITICAL() portEXIT_CRITICAL()
 上面这两个函数是供用户调用的，其中函数 taskENTER_CRITICAL 是进入临界段，函数taskEXIT_CRITICAL 是退出临界段
+
+调度锁就是 RTOS 提供的调度器开关函数，如果某个任务调用了调度锁开关函数，处于调度锁开和调度锁关之间的代码在执行期间是不会被高优先级的任务抢占的，即任务调度被禁止。这一点要跟临界段的
+作用区分开，调度锁只是禁止了任务调度，并没有关闭任何中断，中断还是正常执行的。而临界段进行了开关中断操作。
+调度锁原型：void vTaskSuspendAll( void )
+RTOS没有中断锁，可以使用临界函数来实现。
+任务锁为了防止当前任务的执行被其它高优先级的任务打断而提供的锁机制就是任务锁，可以通过调度锁或者之前的临界函数实现
+调度锁开启函数 vTaskSuspendAll 和调度锁关闭函数 xTaskResumeAll 一定要成对使用，不可在调度锁开启函数 vTaskSuspendAll 和调度锁关闭函数 xTaskResumeAll 之间调用任何会引起任务切换的 API，
+比如 vTaskDelayUntil、 vTaskDelay、 xQueueSend 等
+
+FreeRTOS有两种方法触发任务切换：
+执行系统调用，比如普通任务可以使用taskYIELD()强制任务切换，中断服务程序中使用portYIELD_FROM_ISR()强制任务切换
