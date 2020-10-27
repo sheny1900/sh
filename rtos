@@ -96,4 +96,7 @@ FreeRTOS有两种方法触发任务切换：
 执行系统调用，比如普通任务可以使用taskYIELD()强制任务切换，中断服务程序中使用portYIELD_FROM_ISR()强制任务切换
 
 使用RTOS API函数的任何中断服务程序(fromisr)必须将其优先级手动设置为数值等于或大于configMAX_SYSCALL_INTERRUPT_PRIORITY设置的值,也就是调用RTOS API的中断函数必须受OS管理，
-否则系统会异常卡死，或者导致中断函数处理时间很长，不能及时响应
+否则系统会异常卡死，或者导致中断函数处理时间很长，不能及时响应：
+https://www.cnblogs.com/yangguang-it/p/7211598.html
+https://blog.csdn.net/wyq_841943/article/details/52882565
+
