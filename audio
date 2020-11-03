@@ -1,0 +1,4 @@
+80-n3470-4_e_hexagon_access_audio_voice_pcm_bit_stream_logging_with_qxdm_professional
+介绍音频模块不同模式下通路的节点。
+pcm stream --- 0x152E  audio decoder input--asm---adm---afe 0x1586 afe rx port output 数字mic
+数字mic  afe tx port input ---afe---adm---asm 0x1536 audio encoder output ---pcm stream
