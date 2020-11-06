@@ -2,3 +2,14 @@
 介绍音频模块不同模式下通路的节点。
 pcm stream --- 0x152E  audio decoder input--asm---adm---afe 0x1586 afe rx port output 数字mic
 数字mic  afe tx port input ---afe---adm---asm 0x1536 audio encoder output ---pcm stream
+
+
+HPH (耳机简写headphone)
+MIC_BIAS (耳机麦克风偏置电压)
+MICx_IN(耳机的mic输入口)
+HPH_L(耳机左声道)
+HPH_R(耳机右声道)
+HS_DET(耳机检测脚)  headset_detect
+HPH_REF(耳机参考地)     一些接耳机通道的外置PA,如果耳机地不接这里,接主板的地,可能通话过中会电流声
+NC  常关耳机插座(hp_det和hph_l短路,插入耳机,hp_det和hph_l断路)
+NO 常开耳机插座(这种类型常见,hp_det和hph_l断路,插入耳机,hph_l接了一个喇叭(小电阻)到地,相当有hp_det和hph_l短路)
