@@ -1,0 +1,29 @@
+https://blog.csdn.net/carson_ho/article/details/79549417
+http://www.ruanyifeng.com/blog/2016/12/user_space_vs_kernel_space.html
+adb shell top
+800%cpu   2%user   0%nice  52%sys 721%idle  25%iow   0%irq   0%sirq   0%host
+CPU在各个点的消耗时间
+us（user） cpu消耗在user space的时间百分比
+sy（sys）  cpu消耗在kernel space的时间百分比
+ni（nice） cpu消耗在niceness进程（低优先级）的时间百分比
+id（idle） cpu消耗在闲置进程的时间百分比，值越低，CPU越忙
+wa（iow）  cpu等待外部I/0的时间百分比，这段时间CPU不能执行其他任务，也没执行运算，值太高说明外部设备有问题
+hi（irq）  cpu响应硬件中断请求的时间百分比
+si（sirq） cpu响应软件中断请求的时间百分比
+
+
+time 可以查看单个程序消耗的时间
+time mkdir a.file
+TYE100:/system/bin # time mkdir a.file
+time mkdir a.file
+    0m00.14s real     0m00.03s user     0m00.04s system
+real :程序从开始到结束的全部时间，用户能感知到的时间，包括CPU切换去执行其他任务的时间
+user :程序在user space执行的时间
+sys  :程序在kernel space执行的时间
+usrr和sys之和一般情况下小于real。
+
+
+内存泄露（ML）:程序在申请内存后，在该内存不需再使用时，没有释放，最终因为程序的内存超出了系统为其分配的内存，从而导致内存溢出（OOM）
+android的内存管理=内存分配 + 内存回收（包含堆和进程），包括3个层次：application framework Dalvik虚拟机 linux内核
+进程优先级： 前台进程，可见进程，服务进程，后台进程，空进程，linux内核回收进程，评分在adj中
+工具:Memory Monitor
