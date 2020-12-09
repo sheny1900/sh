@@ -46,3 +46,13 @@ bitmpa
 枚举占用内存大，去除无用的代码，少使用常驻的service 进程十分占用内存，尽量少使用
 
 
+sd卡问题：
+JB2之前的版本只支持SD2.0 SPEC，SD2.0 SPEC定义了最大支持SD卡容量到32G。
+   2，JB2及以后的版本支持SD3.0 SPEC，SD3.0的SPEC定义了最大支持SD卡容量到2T。
+   3，超过32G涉及到兼容性问题如下：
+      1）在linux上format超过32G的卡是FAT32, android/Linux支持。但是Windows系统，只要超过32G，会
+      强制变成exFAT.但是原生Android/Linux不支持exFat.
+   2）如果客户拿一张64GB的卡, 到我们平台format --> ok, 变成FAT32。但如果先拿到windows系统format--->not ok,因为变成exFAT.
+   3）因为windows的这方面的限制，目前是无解的，所以超过32G会有兼容性的问题。所以我们建议32G，这样可以保证没有兼容性的问题，
+   但是超过32G，就会存在上述使用上的兼容性问题，请自行取舍
+
