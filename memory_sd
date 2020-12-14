@@ -1,5 +1,7 @@
 https://blog.csdn.net/carson_ho/article/details/79549417
 http://www.ruanyifeng.com/blog/2016/12/user_space_vs_kernel_space.html
+https://blog.csdn.net/l_215851356/article/details/78635431
+
 adb shell top
 800%cpu   2%user   0%nice  52%sys 721%idle  25%iow   0%irq   0%sirq   0%host
 CPU在各个点的消耗时间
@@ -45,6 +47,18 @@ bitmpa
 代码本身的质量(如数据结构，数据类型等)&数量（代码量大小）可能会导致大量的内存问题，如占用内存大，内存利用率低等
 枚举占用内存大，去除无用的代码，少使用常驻的service 进程十分占用内存，尽量少使用
 
+android进程分类：oom_adj,oom_adj值越大，改进程被系统选中终止的可能性越高，但是空进程和后台进程可以是app能够更快的启动
+    前台进程：foreground，目前正在屏幕上显示的进程和一些系统进程
+    可见进程：visible，不在前台，当用户依旧可见的进程，类似输入法
+    次要服务：secondary server，正在运行的一些服务，类似google企业套件
+    后台服务：hidden，后台进程（background），即前台进程按home键，按back是转为空置任务
+    内容供应节点：content proveder，没有程序实体，仅提供内容供别的程序使用
+    空进程：empty，没有任何东西在运行的进程，音乐不算，因为还有server在运行
+当我们可预见的需要大量内存，如开启一个消耗内存的进程(游戏)、或某一时刻开启大量的进程时，如果这时还交由进程管理机制来处理，那么就会导致机制频繁的检查剩余内存、关闭进程、开启新进程这一流程，
+这时不明智的。我们可以做的是，事先使用进程管理软件，将要使用的内存一次性清理出来，再来开启相应的进程。 应该根据产品定位来分配更合适的oom_adj机制
+linux和android的内存机制区别：
+    linux系统会在进程活动停止后进结束该进程，而android会把程序保留在内存中（进程没有，程序不会消耗任何资源），直到系统需要更多的内存时才会去清理 
+    
 
 sd卡问题：
 JB2之前的版本只支持SD2.0 SPEC，SD2.0 SPEC定义了最大支持SD卡容量到32G。
