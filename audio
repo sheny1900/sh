@@ -15,5 +15,5 @@ NC  常关耳机插座(hp_det和hph_l短路,插入耳机,hp_det和hph_l断路)
 NO 常开耳机插座(这种类型常见,hp_det和hph_l断路,插入耳机,hph_l接了一个喇叭(小电阻)到地,相当有hp_det和hph_l短路)
 
 
-volp app --- track/record---AudioFlinger----Audio HAL(Tiny ALSA)-----hw(msm-pcm-q6-v2.c)---dsp(Audio path ec&ns)---Hardware Codec ---mic/speaker
+voip app --- track/record---AudioFlinger----Audio HAL(Tiny ALSA)-----hw(msm-pcm-q6-v2.c)---dsp(Audio path ec&ns)---Hardware Codec ---mic/speaker
 /JNI-----/--/Multimedia Framework user space--------------------/--/kernel space--------------------------------/
